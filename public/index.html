@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Tu actividad de GitLab, visualizada y analizada por proyecto.">
+  <title>Git Pulse · Tu actividad en GitLab</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Git Pulse, inicio"><span class="brand-icon">⌘</span> git<span class="brand-light">pulse</span><span class="brand-dot"></span></a>
+    <div class="workspace-label">TU ESPACIO DE TRABAJO</div>
+    <nav aria-label="Principal"><a href="#overview" class="nav-active"><span>◫</span> Actividad</a><a href="#projects"><span>▱</span> Proyectos <small id="nav-count">—</small></a><button id="methodology-btn"><span>ⓘ</span> Cómo se calcula</button></nav>
+    <div class="side-note"><span class="connection-dot"></span> GitLab local<div>Conectado mediante tu MCP</div></div>
+    <div class="profile"><div class="avatar">IG</div><div><strong id="profile-name">Tu perfil</strong><span id="profile-user">Conectando…</span></div></div>
+  </aside>
+  <main id="overview">
+    <header class="topbar"><span class="breadcrumb">Workspace <span>/</span> Actividad</span><span class="source-badge"><span class="connection-dot"></span> GitLab · MCP</span></header>
+    <div class="page-heading"><div><div class="eyebrow">CADA CONTRIBUCIÓN CUENTA</div><h1>Tu código, en perspectiva<span>.</span></h1><p id="period-label">Explora tu actividad y tu participación en cada proyecto.</p></div><button id="refresh" class="button primary"><span>↻</span> Actualizar actividad</button></div>
+    <section class="user-selector" aria-label="Actividad por usuario">
+      <form id="user-form"><label for="user-search">Usuario de GitLab</label><div class="user-search-row"><input id="user-search" type="search" placeholder="Nombre o @usuario" minlength="2" maxlength="100" required autocomplete="off"><button id="user-search-button" type="submit" class="button">Buscar usuario</button><button id="mine" type="button" class="button mine-button">Mis contribuciones</button></div></form>
+      <p id="user-context" class="user-context">Identificando tu usuario…</p><p id="user-search-status" class="user-search-status" role="status" aria-live="polite" hidden></p><ul id="user-results" class="user-results" aria-label="Usuarios encontrados" hidden></ul>
+    </section>
+    <section class="toolbar" aria-label="Filtros"><div class="toolbar-input"><label for="year">Período</label><select id="year"></select></div><div class="toolbar-input project-filter"><label for="project">Proyecto</label><select id="project"><option value="">Todos los proyectos</option></select></div><span id="updated" class="updated">Sincronizando por primera vez</span></section>
+    <div id="sync-banner" class="sync-banner" role="status" aria-live="polite"><div class="sync-top"><span id="sync-text">Preparando la conexión…</span><span id="sync-progress"></span></div><progress id="progress" max="100" value="0"></progress></div>
+    <div id="error-banner" class="error-banner" role="alert" hidden></div>
+    <section class="stats" aria-label="Resumen de actividad">
+      <article class="stat"><span class="stat-label">Contribuciones <span>↗</span></span><strong id="total">—</strong><small>Commits, MR, issues y comentarios</small></article>
+      <article class="stat"><span class="stat-label"><span id="commit-label">Commits propios</span><span>⑂</span></span><strong id="commits">—</strong><small id="commit-caption">Autor verificado · todas las ramas</small></article>
+      <article class="stat"><span class="stat-label">Merge requests <span>⇄</span></span><strong id="mrs">—</strong><small id="mr-caption">Creadas por tu usuario</small></article>
+      <article class="stat"><span class="stat-label">Días con actividad <span>◷</span></span><strong id="days">—</strong><small id="streak-caption">Constancia a lo largo del período</small></article>
+    </section>
+    <section class="panel contribution-panel" aria-labelledby="chart-title">
+      <div class="panel-heading"><div><div class="section-kicker">MAPA DE CONTRIBUCIONES</div><h2 id="chart-title">Un año de trabajo, a simple vista</h2></div><div class="chart-tools"><label for="theme" class="sr-only">Color del gráfico</label><select id="theme"><option value="green">Verde</option><option value="blue">Azul</option><option value="purple">Violeta</option><option value="sunset">Atardecer</option><option value="cyan">Cian</option><option value="amber_forge">Ámbar</option></select><button id="export-svg" class="button subtle" disabled>↓ SVG</button><button id="export-png" class="button subtle" disabled>↓ PNG</button></div></div>
+      <div class="view-tabs" role="tablist" aria-label="Visualización"><button role="tab" aria-selected="true" data-view="calendar">▦ Calendario</button><button role="tab" aria-selected="false" data-view="3dbar">▥ Barras 3D</button><button role="tab" aria-selected="false" data-view="monthly">▤ Tendencia mensual</button></div>
+      <div id="chart-area" class="chart-area"><div class="empty-state"><span class="empty-icon">⑂</span><strong>Tu actividad aparecerá aquí</strong><p>Estamos consultando tus contribuciones reales en GitLab.</p></div></div>
+      <div class="chart-footer"><span id="chart-summary">Datos reales · America/Montevideo</span><div class="legend">Menos <i></i><i></i><i></i><i></i><i></i> Más</div></div>
+    </section>
+    <div class="lower-grid">
+      <section class="panel rhythm-panel"><div class="section-kicker">TU RITMO</div><h2>Actividad por día</h2><div id="weekdays" class="weekdays"></div><div class="rhythm-caption" id="rhythm-caption">Descubre cómo se distribuyen tus contribuciones.</div></section>
+      <section class="panel insights-panel"><div class="section-kicker">LECTURA DEL PERÍODO</div><h2>Lo que muestran tus datos</h2><div id="insights" class="insights"><p>El análisis se genera a partir de tu actividad registrada.</p></div></section>
+    </div>
+    <section class="panel projects-panel" id="projects"><div class="panel-heading"><div><div class="section-kicker">PARTICIPACIÓN POR PROYECTO</div><h2>Donde dejas tu huella <span id="project-count" class="count-badge">—</span></h2></div><div class="project-controls"><label for="search" class="sr-only">Buscar proyecto</label><input id="search" placeholder="Buscar proyecto…" type="search"><label for="sort" class="sr-only">Ordenar proyectos</label><select id="sort"><option value="activity">Más actividad</option><option value="name">Nombre A–Z</option><option value="commits">Más commits</option></select></div></div>
+      <div class="table-scroll"><table><thead><tr><th scope="col">Proyecto</th><th scope="col">Contribuciones</th><th scope="col">Commits</th><th scope="col">MR</th><th scope="col">Issues</th><th scope="col">Participación</th><th scope="col"><span class="sr-only">Análisis</span></th></tr></thead><tbody id="project-rows"><tr><td colspan="7" class="table-empty">Consultando proyectos…</td></tr></tbody></table></div>
+    </section>
+    <footer class="page-footer"><span><span id="coverage">Contribuciones vinculadas a tu usuario de GitLab</span> · <button id="methodology-footer" class="footer-button">Cómo se calcula</button></span><span>Visualizaciones con <a href="https://github.com/CatsJuice/ssr-contributions-img" target="_blank" rel="noopener noreferrer">ssr-contributions-img ↗</a></span></footer>
+  </main>
+  <dialog id="detail-dialog" class="detail-dialog"><div class="dialog-top"><span class="section-kicker">ANÁLISIS DEL PROYECTO</span><button data-close="detail-dialog" class="close-button" aria-label="Cerrar análisis">×</button></div><div id="detail-content"></div></dialog>
+  <dialog id="method-dialog"><div class="dialog-top"><h2>Qué estamos contando</h2><button data-close="method-dialog" class="close-button" aria-label="Cerrar explicación">×</button></div><div id="method-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
